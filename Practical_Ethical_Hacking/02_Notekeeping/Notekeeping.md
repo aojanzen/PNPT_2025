@@ -45,7 +45,7 @@ Recommended tools:
   editor to add notes, rectangle for highlights, borders & invert (clean look
   for report!), etc., obfuscate tool (O; set pixel size to 20), copy-paste
   possible with GUI notetaking apps 
-* [Flameshot](flameshot.org); available for Linux, Windows and Mac.
+* [Flameshot](https://flameshot.org/); available for Linux, Windows and Mac.
 
 ## My Own Thoughts
 
