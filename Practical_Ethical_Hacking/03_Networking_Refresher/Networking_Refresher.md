@@ -1,5 +1,7 @@
 # Networking Refresher
 
+
+
 ## IP Addresses
 
 Layer 3, network layer
@@ -37,6 +39,8 @@ The IP protocol is used by IP routers.
 Private IP addresses are not used on the public internet, they are reserved for
 NAT and internal networks.
 
+
+
 ## MAC Addresses
 
 Layer 2 protocol, data-link layer
@@ -51,11 +55,13 @@ Layer 2 protocol, data-link layer
 * MAC addresses are used on local area networks (LAN). Beyond that, IP addresses
   are used to identify source and destination of a packet. 
 
+
+
 ## TCP, UDP, and the Three-Way Handshake
 
 Layer 4: transport layer
 
-** TCP, transmission control protocol:**
+**TCP, transmission control protocol:**
 
 * Connection-oriented protocol
 * Reliable, ordered, error-checked through acknowledgement, retransmission and flow control
@@ -83,6 +89,8 @@ connection or closed for higher security.
 
 Wireshark can be used to capture and analyse network traffic.
 
+
+
 ## Common Ports and Protocols
 
 <img src="./Common_Ports_and_Protocols.png" alt="Common Ports and Protocols" width="800"/>
@@ -101,6 +109,8 @@ penetration testing.
 * TFTP (trivial FTP)
 * SNMP (Simple Network Management Protocol), can be used to gather information
   transmitted in clear text (community/public strings)
+
+
 
 ## The OSI Model
 
@@ -149,6 +159,38 @@ application layer.
 
 <img src="OSI_and_TCPIP_Models.jpg" alt="OSI vs TCP/IP Model" width="800"/>
 
+
+
 ## Subnetting (Part 1 & 2)
 
+This subject was unfortunately not explained well by the Cybermentor. Most of the
+information below is from my recollection of the Udemy course for CompTIA
+Network+ plus additional/double-checked information from Google and Wikipedia.
 
+* IPv4 addresses consist of 32 bits in 8 bytes separated by dots. Subnetting
+  involves borrowing some of the host bits to create a subnet identifier.
+* The purpose of subnetting is the sub-division of an IP range into smaller
+  subnets that are separated from other subnets (network management). It also
+  allows a more efficient use of IP address range.
+* Borrowing 2 host bits means we can create 4 subnets with these two bits. Each
+  subnet can then be assigned to a different segment or a different purpose
+  within the network.
+* Routers and subnets
+* Subnet mask
+* CIDR notation: Classless Inter-Domain Routing, replaces the older system
+  based on classes A, B, and C. CIDR specifies the length of the network portion
+  of an IP address range, indicated by a slash and the prefix length of the
+  network part, e.g. /25 for the first 25 bits, leaving 7 host bits.
+* Always subtract 2 from total number of hosts:
+    * First subnet address is the **network ID** (usually)
+    * Last subnet address is the **broadcast address** (usually)
+* Procedure to determine subnet mask, number of hosts, network and broadcast
+  address from CIDR notation:
+    * Determine subnet mask from number of free bits (= 32 - CIDR)
+    * Determine number of hosts from number of free bits (= sum over free bits - 2 for network ID and broadcast address)
+    * Network ID is given by IP in CIDR notation
+    * Broadcast IP is given by setting all host bits to 1 and appending that to the network ID
+* Website to check this kind of exercises:
+  [ipaddressguide.com](https://ipaddressguide.com/cidr)
+* Understanding subnetting is important for communication with customers about
+  the IP address range that shall be subject to a pentest.
