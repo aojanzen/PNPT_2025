@@ -12,7 +12,7 @@ The IP protocol is used by IP routers.
 
 * Dotted-decimal notation, 4 octets/bytes (4 x 8 bits = 32 bits), separated by dots
 * Binary to decimal conversion
-* Number of possible IPv4 addresses: ca. 4.3 billion, but 7 billion peopleon
+* Number of possible IPv4 addresses: ca. 4.3 billion, but 7 billion people on
   earth. All IPv4 addresses used up.
 
 **IPv6:**
@@ -31,9 +31,9 @@ The IP protocol is used by IP routers.
 **Private IP Addresses:**
 
 * Class A: also `/8` to indicate that the first 8 bits of the IP address range
-  remain fixed. Private address range: `10.0.0.0 - 10.255.255.255`
-* Class B: also `/12`. Private address range: `172.16.0.0 - 172.31.255.255`
-* Class C: also `/16`. Private address range: `192.168.0.0 - 192.168.255.255`
+  remain fixed. First bit always `0`. Private address range: `10.0.0.0 - 10.255.255.255`
+* Class B: also `/16`, first two bits always `10`. Private address range: `172.16.0.0 - 172.31.255.255`
+* Class C: also `/24`, first three bits always `110`. Private address range: `192.168.0.0 - 192.168.255.255`
 * Loopback (localhost): address range `127.0.0.1 - 127.0.0.7`
 
 Private IP addresses are not used on the public internet, they are reserved for
