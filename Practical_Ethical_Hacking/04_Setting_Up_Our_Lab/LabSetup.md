@@ -25,4 +25,13 @@ in VM settings so that all VMs are running on the same subnet
 
 ## Installing Kali Linux
 
+* Debian-based geared towards hacking and penetration testing
+* No/few downloads of hacking tools needed
+* Download correct virtual machine version (Virtualbox / VMWare)
+* Klicking on .vmx file will start the virtual machine under VMWare
+* With 8 GB RAM installed, chose 1 GB or 2 GB RAM for the VM
+* Make sure "Network adapter" is set to NAT (NatNetwork on Virtualbox) and DHCP
+  is activated on all virtual machines, otherwise they do not see each other!
+* Change password from `kali:kali` to a long, but easy to remember password.
+* Add to `~/.profile`: `setxkbmap de -option caps:swapescape`
 
