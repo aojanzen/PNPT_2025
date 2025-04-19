@@ -44,3 +44,8 @@ program and stay within scope of the program! Read the rules of engagement!
 Avoid the targets listed under "Out of Scope"!
 
 Example used in the course: tesla.com
+
+
+
+Recommended multiple times on reddit as a good source for free bug bounty training:
+[Portswigger Academy](https://portswigger.net/web-security)
