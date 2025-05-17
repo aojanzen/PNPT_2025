@@ -22,7 +22,7 @@ Nikto is a web vulnerability scanner that is particularly helpful for beginners
 (Vulnhub, CTF, HackTheBox). If the website runs good security measures, the
 Nikto scans might be blocked (oftentimes not the case!).
 
-<img src="./nikto.png" alt="Nikto" width="800"/> 
+<img src="./images/nikto.png" alt="Nikto" width="800"/> 
 
 `nikto -h http://10.0.2.4`
 
@@ -47,7 +47,7 @@ The mentioned **gobuster** is actually not installed in Kali 2025.01.
 are shown here, too. The port number is important, there are more wordlists in
 the shown folder and even larger ones on the internet.
 
-<img src="./dirbuster.png" alt="Dirbuster" width="800"/>
+<img src="./images/dirbuster.png" alt="Dirbuster" width="800"/>
 
 The wordlists contain large numbers of typical folder and filenames that are
 used on webservers. The tool probes whether any of these exist on the website.
@@ -56,7 +56,7 @@ etc. On the `Results tree` tab, one can right-click on the found results and
 open them directly in a browser. The estimated duration, even with a small word
 list, is about 3 hours!
 
-<img src="./dirbuster_results.png" alt="Dirbuster results" width="800"/>
+<img src="./images/dirbuster_results.png" alt="Dirbuster results" width="800"/>
 
 The response codes are broadly classified as follows:
 
@@ -69,7 +69,7 @@ Looking through the found pages, we see a `usage...html` page that shows version
 information at the bottom. We can add this to our pentesting report, too. (The
 software might or might not run on the webserver.)
 
-<img src="./dirbuster_webalyzer.png" alt="Dirbuster, Webalyzer version info" width="800"/>
+<img src="./images/dirbuster_webalyzer.png" alt="Dirbuster, Webalyzer version info" width="800"/>
 
 We can dig through the results found and check whether we can find any helpful
 information. Be mindful of the danger of going down a rabbit hole!
@@ -96,17 +96,17 @@ on the request that is intercepted and chose `Send to Repeater`. The
 `Repeater` tab will then be highlighted. The `Repeater` lets us modify the HTTP
 request manually and shows the response at the same time.
 
-<img src="./burpsuite_repeater.png" alt="Burpsuite, send to repeater" width="800"/>
+<img src="./images/burpsuite_repeater.png" alt="Burpsuite, send to repeater" width="800"/>
 
 On the `Repeater`tab, we can sometimes see version information as in the
 following screenshot (see server header). This is also information that can be
 put into the pentesting report.
 
-<img src="./burpsuite_repeater2.png" alt="Burpsuite repeater showing version
+<img src="./images/burpsuite_repeater2.png" alt="Burpsuite repeater showing version
 information" width="800"/>
 
 We can limit the scope to just a URL or IP address using the `Scope` tab and
 adding an entry for our website and service, e.g. `http://10.0.2.4/`
 
-<img src="./burpsuite_scope.png" alt="Burpsuite, limit scope" width="800"/>
+<img src="./images/burpsuite_scope.png" alt="Burpsuite, limit scope" width="800"/>
 

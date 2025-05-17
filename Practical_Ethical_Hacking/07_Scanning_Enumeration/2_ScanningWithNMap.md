@@ -14,7 +14,7 @@ Kali tool `arp-scan -l`, which performs an ARP scan, which is also what
 `netdiscover` does. Look for `VMware, Inc.` (in my case, `PCS Systemtechnik
 GmbH`, though). `<CTRL>-<C> kills the netdiscover session.
 
-<img src="./netdiscover.png" alt="Netdiscover" width="800"/>
+<img src="./images/netdiscover.png" alt="Netdiscover" width="800"/>
 
 
 
@@ -37,7 +37,7 @@ will be scanned. Otherwise one can also scan a port list or range with `-p`
 (0-65535).
 * `-A` : scan for all available information (operating system, version, etc.)
 
-<img src="./nmap.png" alt="NMap" width="800"/>
+<img src="./images/nmap.png" alt="NMap" width="800"/>
 
 Use `nmap --help` for more information on options.
 
@@ -53,7 +53,7 @@ with the `-A` option
 the found open ports in the second step. This can also be scripted.
 * Nmap is typically used to scan while one is working on OSINT in parallel
 
-<img src="./nmap_steps.png" alt="NMap in steps" width="800"/>
+<img src="./images/nmap_steps.png" alt="NMap in steps" width="800"/>
 
 Now we can look up the information on the open ports and services running on
 these ports and try to find exploits to use this information.
