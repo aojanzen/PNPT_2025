@@ -233,3 +233,17 @@ tree connect failed: NT_STATUS_ACCESS_DENIED
 <img src="./images/05__metasploiteternalblueexploit.png" alt="Settings for Eternalblue exploit" width="800"/>
 
 <img src="./images/06__metasploiteternalblueexploit__success.png" alt="Successful exploit" width="800"/>
+
+
+
+## Manual Exploitation
+
+One could also search manually for code that allows us **Remote Code Execution
+(RCE)** on the victim machine. TCM has demonstrated this with this [Github
+repository](https://github.com/3ndG4me/AutoBlue-MS17-010). He prefers exploits
+with good documentation and good a how-to guide.
+
+The exploit led to the victim machine crashing (blue screen), which led TCM to
+warn of the dangers of RCE in pentests without the customers' explicit
+permission. If a critical machine crashed e.g. in a hospital, the consequences
+might be servere.
