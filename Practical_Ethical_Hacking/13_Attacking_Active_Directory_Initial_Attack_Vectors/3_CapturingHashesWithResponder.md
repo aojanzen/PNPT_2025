@@ -130,6 +130,13 @@ may be weak, we can take it and try to crack it.
 
 
 
+### Further Reading
+
+* [Detailed Guide on Responder](https://www.hackingarticles.in/a-detailed-guide-on-responder-llmnr-poisoning/)
+* [Archived github repo](https://github.com/lgandx/Responder)
+
+
+
 <!--
 span style="color:green;font-weight:700;font-size:20px">
 markdown color font styles
