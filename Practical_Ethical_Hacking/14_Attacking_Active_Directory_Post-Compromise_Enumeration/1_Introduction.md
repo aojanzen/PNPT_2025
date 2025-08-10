@@ -17,6 +17,17 @@ updated for a long time and is easily picked up by antivirus software.
 
 
 
+### Further reading
+
+* [LDAP (Wikipedia)](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol)
+* [Was ist LDAP-Authentifizierung? Grundlagen und Vorteile](https://www.redhat.com/de/topics/security/what-is-ldap-authentication)
+* [LDAP Enumeration: Unveiling the Double-Edged Sword of Active Directory](https://unit42.paloaltonetworks.com/lightweight-directory-access-protocol-based-attacks/)
+* [Andreas Happe: Active Directory: Using LDAP Queries for Stealthy Enumeration](https://snikt.net/blog/2023/01/25/active-directory-using-ldap-queries-for-stealthy-enumeration/)
+* [Lightweight Directory Access Protocol (LDAP)](https://github.com/curtishoughton/Penetration-Testing-Cheat-Sheet/blob/master/Enumeration/LDAP/LDAP.md)
+* [The Hacker Recipes -- LDAP](https://www.thehacker.recipes/ad/recon/ldap)
+* [LDAP Pentesting for Red Teamers: A Complete Guide](https://medium.com/@gokulg.me/introduction-92199491c808)
+
+
 <!--
 span style="color:green;font-weight:700;font-size:20px">
 markdown color font styles
