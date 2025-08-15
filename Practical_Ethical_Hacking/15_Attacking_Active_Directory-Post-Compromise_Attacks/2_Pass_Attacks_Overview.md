@@ -1,8 +1,9 @@
 # Pass Attacks Overview
 
 When we dump a password hash from a SAM or crack a password, we can pass the
-login credentials around on the network to see if they work on other machines,
-too. This is a way of lateral movement.
+login credentials (clear text password or the password hash) around on the
+network to see if they work on other machines, too. This is a way of lateral
+movement.
 
 <img src="./images/2_Pass_Attacks_Overview_01.png" alt="Pass Attacks Overview 1" width="800"/>
 
@@ -12,8 +13,8 @@ previously somehow, in this case `fcastle:Password1`. `crackmapexec` will pass
 these credentials to every other machine on the network that accepts SMB
 connections. We are primarily interested in accounts where we have local
 administrator rights, as indicated by `(Pwn3d!)` at the end of the success
-message. In the example, we have local admin rights on `SPIDERMAN` and
-`THEPUNISHER`, but not on `HYDRA-DC`.
+message. In the example, the credentials work on all three machines, but we only
+have local admin rights on `SPIDERMAN` and `THEPUNISHER`, but not on `HYDRA-DC`.
 
 <img src="./images/2_Pass_Attacks_Overview_02.png" alt="Pass Attacks Overview 2" width="800"/>
 
@@ -30,7 +31,10 @@ requires that we have access credentials of a local admin on a machine.
 
 Similar to passing known user credentials, we can also pass a password hash
 with `crackmapexec` when we use the switch `--local-auth` and the option `-h
-<HASH>`.
+<HASH>`. We can tell from red `[-]` indicator that the login on `HYDRA-DC`
+failed. This is because we are using a hash for a local account, and the
+password on `HYDRA-DC` is different from the one used on `THEPUNISHER` and
+`SPIDERMAN`.
 
 <img src="./images/2_Pass_Attacks_Overview_05.png" alt="Pass Attacks Overview 5" width="800"/>
 
@@ -56,8 +60,9 @@ This can also be done with `secretsdump.py`, which is TCM's preferred method.
 
 One of these built-in modules is called `lsassy`, which can be used with the `-M
 lsassy` option. The LSASS enforces the security policy, but more importantly, it
-also stores credentials that we may be able to see in real time, but may not
-have access to from a secrets dump.
+also stores credentials of users that are currently logged in. In this way we
+may get access to credentials that might otherwise not be accessible to us via
+a secrets dump.
 
 <img src="./images/2_Pass_Attacks_Overview_10.png" alt="Pass Attacks Overview 10" width="800"/>
 
