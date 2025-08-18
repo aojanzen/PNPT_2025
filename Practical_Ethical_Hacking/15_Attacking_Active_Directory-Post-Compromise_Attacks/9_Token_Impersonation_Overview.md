@@ -63,7 +63,7 @@ admin account and own the domain easily. **This is a very dangerous attack!**
 
 * [Access token (Wikipedia)](https://en.wikipedia.org/wiki/Access_token)
 * [Access tokens](https://learn.microsoft.com/en-us/windows/win32/secauthz/access-tokens)
-
+* [Windows Privilege Escalation – Token Impersonation](https://steflan-security.com/linux-privilege-escalation-token-impersonation/)
 
 
 <!--
