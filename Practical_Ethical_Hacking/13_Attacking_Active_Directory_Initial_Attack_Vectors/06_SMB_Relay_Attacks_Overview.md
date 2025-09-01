@@ -29,39 +29,45 @@ enabled but not required` is proof that SMB signing is disabled (and hence an
 important finding for our pentest report!). Use the command
 `nmap --script=smb2-security-mode.nse -p445 <target IP CIDR>`, used once on the
 Windows server (10.0.2.5) and once on one of the Windows user machines (10.0.2.6).
-**Note:** `"Message signing enabled but not required"` means that SMB signing is
+**Note:** `"Message signing enabled and required"` means that SMB signing is
 enforced on the machine. Consider to use the switch `-Pn` for the `nmap`
 command, especially when using security scripts. This treats all hosts as online
 and skips host discovery.
 
 ```
-    ┌──(kali㉿kali)-[~]
-    └─$ nmap --script=smb2-security-mode.nse -p445 10.0.2.5
-    Starting Nmap 7.95 ( https://nmap.org ) at 2025-07-31 02:19 EDT
-    Nmap scan report for 10.0.2.5
-    Host is up (0.000040s latency).
+┌──(kali㉿kali)-[~]
+└─$ nmap --script=smb2-security-mode.nse -p445 10.0.2.15
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-29 12:07 PDT
+Nmap scan report for blackpearl.tcm (10.0.2.15)
+Host is up (0.00054s latency).
 
-    PORT    STATE  SERVICE
-    445/tcp closed microsoft-ds
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+MAC Address: 08:00:27:99:A3:3E (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
 
-    Nmap done: 1 IP address (1 host up) scanned in 0.25 seconds
+Host script results:
+| smb2-security-mode:
+|   3:1:1:
+|_    Message signing enabled and required
 
-    ┌──(kali㉿kali)-[~]
-    └─$ nmap --script=smb2-security-mode.nse -p445 10.0.2.6
-    Starting Nmap 7.95 ( https://nmap.org ) at 2025-07-31 02:19 EDT
-    Nmap scan report for 10.0.2.6
-    Host is up (0.00045s latency).
+Nmap done: 1 IP address (1 host up) scanned in 0.46 seconds
 
-    PORT    STATE SERVICE
-    445/tcp open  microsoft-ds
-    MAC Address: 08:00:27:16:45:F8 (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
+┌──(kali㉿kali)-[~]
+└─$ nmap --script=smb2-security-mode.nse -p445 10.0.2.6
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-08-29 12:11 PDT
+Nmap scan report for 10.0.2.6
+Host is up (0.00028s latency).
 
-    Host script results:
-    | smb2-security-mode: 
-    |   3:1:1: 
-    |_    Message signing enabled but not required
+PORT    STATE SERVICE
+445/tcp open  microsoft-ds
+MAC Address: 08:00:27:16:45:F8 (PCS Systemtechnik/Oracle VirtualBox virtual NIC)
 
-    Nmap done: 1 IP address (1 host up) scanned in 0.59 seconds
+Host script results:
+| smb2-security-mode:
+|   3:1:1:
+|_    Message signing enabled but not required
+
+Nmap done: 1 IP address (1 host up) scanned in 0.32 seconds
 ```
 
 <img src="./images/SMB_Relay_Attacks_Overview_2.png" alt="SMB Relay Attacks Overview 2" width="800"/>
@@ -162,7 +168,6 @@ and P incompatible, change to `-dP`)
 
 ### Further Reading
 
-* [A bit older](https://www.hackinglab.cz/en/blog/smb-relay/)
 * [TCM Sec writeup](https://tcm-sec.com/smb-relay-attacks-and-how-to-prevent-them/)
 * [A detailed
   walkthrough](https://medium.com/@AnisO./active-directory-attacks-smb-relay-attacks-ea7d8cf9a8f8)
